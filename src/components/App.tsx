@@ -12,6 +12,15 @@ import {
   ListIcon,
   Spacer,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  useDisclosure,
+  BreadcrumbLink,
+  ModalBody,
+  Input,
+  InputLeftElement,
+  InputGroup
 } from "@chakra-ui/react";
 import { useState } from "react";
 import docs from "../wp_docs";
@@ -20,11 +29,15 @@ import { CgShapeHexagon } from "react-icons/cg";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { useEffect } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 
 function App() {
   const [html, setHtml] = useState<any>();
   const [$, set$] = useState<any>();
   const [section, setSection] = useState<any>(null);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
 
   // const $ = cheerio.load('<ul id="fruits">...</ul>');
 
@@ -37,9 +50,9 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    set$(cheerio.load(html.toString()));
-  }, [html]);
+  // useEffect(() => {
+  //   set$(cheerio.load(html.toString()));
+  // }, [html]);
 
   // useEffect(() => {});
 
@@ -55,7 +68,19 @@ function App() {
   return (
     <ChakraProvider>
       <div className="App">
-        <Header />
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <InputGroup>
+            <InputLeftElement pointerEvents="none" children={<AiOutlineSearch color="#003963"/>}/>
+            <Input type="text" width="100%" placeholder="Search the docs"></Input>
+
+            </InputGroup>
+    
+
+          </ModalContent>
+        </Modal>
+        <Header onOpen={onOpen} />
         <Flex
           as="main"
           width="1440px"

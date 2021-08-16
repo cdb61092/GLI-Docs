@@ -8,6 +8,13 @@ import {
   Text,
   Kbd,
   Button,
+  Modal,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  useDisclosure,
+  ModalOverlay
+
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
@@ -17,8 +24,12 @@ import { KeyCombo } from ".";
 // const Search = styled.div`
 //   position:
 // `;
+type HeaderProps = {
+  onOpen: () => void;
+}
 
-const Header = () => {
+const Header = ({ onOpen }: HeaderProps) => {
+
   return (
     <Box
       as="header"
@@ -28,6 +39,7 @@ const Header = () => {
       background="white"
       width="100%"
     >
+
       <Flex
         width="1440px"
         alignItems="center"
@@ -49,7 +61,7 @@ const Header = () => {
         </div>
 
         <Box width="40%" boxShadow="base">
-          <Button isFullWidth leftIcon={<AiOutlineSearch />} variant="outline">
+          <Button isFullWidth leftIcon={<AiOutlineSearch />} variant="outline" onClick={onOpen}>
             <Flex justify="space-between" width="full">
               <Text>Search the docs</Text>
               <div>
